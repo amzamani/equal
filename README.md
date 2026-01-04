@@ -38,7 +38,7 @@ xray/
 
 ```bash
 # Clone the repository
-cd test-equal-1
+cd equal
 ```
 
 Set up the API server with env

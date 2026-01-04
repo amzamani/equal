@@ -5,6 +5,8 @@ Complete API reference for the X-Ray observability system.
 **Base URL**: `http://localhost:3000`  
 **API Version**: `v1`
 
+POSTMAN collection URL : https://backend-team-toffeemoney.postman.co/workspace/93628501-c31d-4f91-bc71-064d7d6af68d/collection/13971265-63e3fc5b-c58b-4616-a784-4128734ca5f5?action=share&source=copy-link&creator=13971265
+
 ---
 
 ## Quick Reference

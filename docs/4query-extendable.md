@@ -3,7 +3,7 @@
 Enable users to query "Show me all runs where the filtering step eliminated more than 90% of candidates" across different pipelines, both in the Viewer UI and via the Node.js API.
 
 > [!IMPORTANT]
-> **API Design Decision**: The analytics endpoints will be added under `/v1/analytics/*` to separate them from basic CRUD operations. This keeps the API organized and allows for future analytics features.
+> **API Design Decision**: The analytics endpoints was added under `/v1/analytics/*` to separate them from basic CRUD operations. This keeps the API organized and allows for more future analytics features.
 
 > [!NOTE]
 > **Query Performance**: Initial implementation will query the database directly without caching. For production use with large datasets, we should consider adding:
