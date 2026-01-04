@@ -17,6 +17,7 @@ Complete API reference for the X-Ray observability system.
 | `POST` | `/v1/events/batch` | Ingest multiple events |
 | **Event Queries** |
 | `GET` | `/v1/events?trace_id={id}` | Get all events for a trace |
+| `GET` | `/v1/events/{span_id}` | Get a single event |
 | **Trace Management** |
 | `GET` | `/v1/traces` | List all traces |
 | **Analytics** |
@@ -215,6 +216,32 @@ Retrieve all events for a specific trace.
 **Status Codes**:
 - `200 OK`: Events retrieved successfully
 - `400 Bad Request`: Missing `trace_id` parameter
+- `500 Internal Server Error`: Server error
+
+---
+
+### `GET /v1/events/{span_id}`
+
+Retrieve a single event by its specific Span ID.
+
+**Path Parameters**:
+- `span_id` (required): UUID of the event
+
+**Response**:
+```json
+{
+  "event_type": "llm_call",
+  "trace_id": "550e8400-...",
+  "span_id": "a1b2c3d4-...",
+  "timestamp": "2024-01-03T10:30:00Z",
+  "service": "competitor-search",
+  ...
+}
+```
+
+**Status Codes**:
+- `200 OK`: Event retrieved successfully
+- `404 Not Found`: Event not found
 - `500 Internal Server Error`: Server error
 
 ---

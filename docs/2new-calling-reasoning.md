@@ -13,7 +13,7 @@ curl --location 'https://api.znapai.com/v1/responses' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer sk-J7Q4gVU6PZEspHx5VwxW_Q' \
 --data '{
-    "model": "o3-pro",
+    "model": "gpt-5",
     "input": "give keywords to list headphone on amazon",
     "reasoning": {
       "effort": "medium",

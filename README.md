@@ -38,7 +38,7 @@ xray/
 
 ```bash
 # Clone the repository
-cd equal
+cd test-equal-1
 ```
 
 Set up the API server with env
@@ -73,10 +73,6 @@ VITE_OPENAI_API_KEY=your_znapai_api_key_here
 VITE_XRAY_ENDPOINT=http://localhost:3000
 
 ```
-OpenAI compatible api key can be taken from [https://znapai.com/app](https://znapai.com/app)
-for viewing live working example
-or another option is to replace the base URL in example app to default OpenAI and use actual OpenAI key.
-
 
 After setting env variables, run the following commands
 

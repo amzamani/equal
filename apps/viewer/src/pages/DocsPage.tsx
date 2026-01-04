@@ -1,5 +1,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Code, Brain, CheckCircle } from 'lucide-react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+const CodeBlock = ({ code, language = 'typescript' }: { code: string; language?: string }) => (
+    <div className="rounded-md overflow-hidden text-sm">
+        <SyntaxHighlighter
+            language={language}
+            style={vscDarkPlus}
+            customStyle={{ margin: 0, padding: '1rem' }}
+        >
+            {code}
+        </SyntaxHighlighter>
+    </div>
+);
 
 export function DocsPage() {
     return (
@@ -25,31 +39,26 @@ export function DocsPage() {
                         <div className="flex items-start gap-3">
                             <div className="flex-1">
                                 <h4 className="font-semibold mb-1">1. Install the SDK</h4>
-                                <pre className="bg-secondary p-3 rounded-md text-sm overflow-x-auto">
-                                    <code>npm install @xray/sdk</code>
-                                </pre>
+                                <CodeBlock code="npm install @xray/sdk" language="bash" />
                             </div>
                         </div>
 
                         <div className="flex items-start gap-3">
                             <div className="flex-1">
                                 <h4 className="font-semibold mb-1">2. Initialize XRayLogger</h4>
-                                <pre className="bg-secondary p-3 rounded-md text-sm overflow-x-auto">
-                                    <code>{`import { XRayLogger } from '@xray/sdk';
+                                <CodeBlock code={`import { XRayLogger } from '@xray/sdk';
 
 const xray = new XRayLogger({
   service: 'my-service',
   endpoint: 'http://localhost:3000'
-});`}</code>
-                                </pre>
+});`} />
                             </div>
                         </div>
 
                         <div className="flex items-start gap-3">
                             <div className="flex-1">
                                 <h4 className="font-semibold mb-1">3. Log LLM Events</h4>
-                                <pre className="bg-secondary p-3 rounded-md text-sm overflow-x-auto">
-                                    <code>{`const traceId = xray.createTrace();
+                                <CodeBlock code={`const traceId = xray.createTrace();
 
 // Call your LLM
 const response = await openai.chat.completions.create({
@@ -76,30 +85,28 @@ await xray.logLLM({
   
   // REQUIRED: Input data
   input: {
-    user_prompt_hash: 'hash_abc123',
+    user_prompt_hash: 'hash_abc123', // OPTIONAL: for deduplication
     raw_prompt: prompt, // OPTIONAL: for debugging
     input_tokens: 150
   },
   
   // REQUIRED: Output data
   output: {
-    response_hash: 'hash_def456',
+    response_hash: 'hash_def456', // OPTIONAL: for deduplication
     response_text: response.choices[0].message.content, // OPTIONAL
     output_tokens: 200
   },
   
   // REQUIRED: Model parameters
   params: { temperature: 0.7 }
-});`}</code>
-                                </pre>
+});`} />
                             </div>
                         </div>
 
                         <div className="flex items-start gap-3">
                             <div className="flex-1">
                                 <h4 className="font-semibold mb-1">4. Log Decision Events</h4>
-                                <pre className="bg-secondary p-3 rounded-md text-sm overflow-x-auto">
-                                    <code>{`// Track filtering/funnel decisions
+                                <CodeBlock code={`// Track filtering/funnel decisions
 await xray.logDecision({
   // REQUIRED: Trace identifier
   trace_id: traceId,
@@ -119,16 +126,14 @@ await xray.logDecision({
   
   // OPTIONAL: Decision criteria context
   criteria: { max_price: 300 }
-});`}</code>
-                                </pre>
+});`} />
                             </div>
                         </div>
 
                         <div className="flex items-start gap-3">
                             <div className="flex-1">
                                 <h4 className="font-semibold mb-1">5. Add Metadata (Rejected/Selected Items)</h4>
-                                <pre className="bg-secondary p-3 rounded-md text-sm overflow-x-auto">
-                                    <code>{`// Store rejected and selected items in metadata
+                                <CodeBlock code={`// Store rejected and selected items in metadata
 await xray.logDecision({
   trace_id: traceId,
   timestamp: new Date().toISOString(),
@@ -167,8 +172,7 @@ await xray.logDecision({
     user_id: 'user-123',
     search_query: 'gaming headphones'
   }
-});`}</code>
-                                </pre>
+});`} />
                                 <p className="text-xs text-muted-foreground mt-2">
                                     💡 The Viewer automatically displays selected items (green cards) and rejected items (red cards) from metadata!
                                 </p>
@@ -202,7 +206,7 @@ await xray.logDecision({
 
                     <div className="bg-white p-3 rounded border">
                         <p className="text-xs font-semibold mb-2">Example: E-commerce Product Filtering</p>
-                        <pre className="text-xs overflow-x-auto"><code>{`metadata: {
+                        <CodeBlock code={`metadata: {
   // Selected items
   selected_items: [
     { id: 'p1', name: 'Gaming Chair', price: 299, score: 0.95 }
@@ -225,12 +229,12 @@ await xray.logDecision({
   category: 'furniture',
   user_id: 'user-123',
   search_query: 'gaming chair'
-}`}</code></pre>
+}`} />
                     </div>
 
                     <div className="bg-white p-3 rounded border">
                         <p className="text-xs font-semibold mb-2">Example: Fraud Detection</p>
-                        <pre className="text-xs overflow-x-auto"><code>{`metadata: {
+                        <CodeBlock code={`metadata: {
   domain: 'fraud_detection',
   risk_threshold: 0.8,
   transaction_type: 'wire_transfer',
@@ -239,12 +243,12 @@ await xray.logDecision({
     { id: 'tx-001', amount: 50000, risk_score: 0.92,
       reason: 'unusual_amount' }
   ]
-}`}</code></pre>
+}`} />
                     </div>
 
                     <div className="bg-white p-3 rounded border">
                         <p className="text-xs font-semibold mb-2">Example: Medical Diagnosis</p>
-                        <pre className="text-xs overflow-x-auto"><code>{`metadata: {
+                        <CodeBlock code={`metadata: {
   domain: 'healthcare',
   specialty: 'cardiology',
   patient_age: 45,
@@ -253,7 +257,7 @@ await xray.logDecision({
     { condition: 'anxiety', probability: 0.15 },
     { condition: 'gerd', probability: 0.25 }
   ]
-}`}</code></pre>
+}`} />
                     </div>
 
                     <div className="border-t pt-3 mt-3">
@@ -279,14 +283,14 @@ await xray.logDecision({
                         <p className="text-xs text-muted-foreground mb-2">
                             Query across different domains using metadata filters:
                         </p>
-                        <pre className="text-xs bg-secondary p-2 rounded overflow-x-auto"><code>{`# Query fraud detection traces with high drop rates
+                        <CodeBlock language="bash" code={`# Query fraud detection traces with high drop rates
 GET /v1/analytics/high-drop-traces?threshold=0.9&metadata.domain=fraud_detection
 
 # Query medical diagnosis traces
 GET /v1/analytics/high-drop-traces?threshold=0.8&metadata.domain=healthcare
 
 # Query e-commerce product filtering
-GET /v1/analytics/high-drop-traces?threshold=0.7&metadata.domain=ecommerce`}</code></pre>
+GET /v1/analytics/high-drop-traces?threshold=0.7&metadata.domain=ecommerce`} />
                     </div>
                 </CardContent>
             </Card>
@@ -364,7 +368,7 @@ GET /v1/analytics/high-drop-traces?threshold=0.7&metadata.domain=ecommerce`}</co
 
                     <div className="bg-white p-3 rounded border">
                         <p className="text-xs font-mono text-muted-foreground mb-2">Example:</p>
-                        <pre className="text-xs"><code>{`const traceId = xray.createTrace(); // Once per request
+                        <CodeBlock code={`const traceId = xray.createTrace(); // Once per request
 
 // Event 1: LLM call
 await xray.logLLM({ trace_id: traceId, ... });
@@ -373,7 +377,7 @@ await xray.logLLM({ trace_id: traceId, ... });
 await xray.logDecision({ trace_id: traceId, ... });
 
 // Event 3: Another LLM call
-await xray.logLLM({ trace_id: traceId, ... });`}</code></pre>
+await xray.logLLM({ trace_id: traceId, ... });`} />
                     </div>
                 </CardContent>
             </Card>
