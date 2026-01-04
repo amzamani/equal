@@ -132,7 +132,9 @@ Return JSON:
         // Log Decision Event (Filtering/Selection)
         const totalTaxonomySize = TAXONOMY.length;
         const candidateCount = scoredCandidates.length; // Items retrieved
-        const droppedCount = totalTaxonomySize - candidateCount; // Implicitly dropped by search
+        const keptCount = candidateCount > 0 ? 1 : 0;
+        const droppedLowerScoreCount = Math.max(0, candidateCount - 1);
+        const droppedNoMatchCount = totalTaxonomySize - candidateCount;
 
         await xray.logDecision({
             trace_id: traceId,
@@ -141,13 +143,13 @@ Return JSON:
             service: 'product-categorizer',
             decision: {
                 input_count: totalTaxonomySize, // We technically considered the whole DB via search
-                output_count: 1,
+                output_count: keptCount,
                 kept: [
-                    { count: 1, reason: 'best_keyword_match' }
+                    { count: keptCount, reason: 'best_keyword_match' }
                 ],
                 dropped: [
-                    { count: droppedCount, reason: 'no_keyword_match' }, // The "retrieval" drop
-                    { count: candidateCount - 1, reason: 'lower_score' } // The "ranking" drop
+                    { count: droppedNoMatchCount, reason: 'no_keyword_match' }, // The "retrieval" drop
+                    { count: droppedLowerScoreCount, reason: 'lower_score' } // The "ranking" drop
                 ]
             },
             criteria: {
