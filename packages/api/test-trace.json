@@ -1,0 +1,240 @@
+{
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "service": "competitor-search",
+    "name": "Amazon Product Search - Test",
+    "status": "completed",
+    "startTime": 1704278400000,
+    "endTime": 1704278410000,
+    "metadata": {
+        "user_id": "test-user-123",
+        "product": "Sony WH-1000XM5"
+    },
+    "steps": [
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440001",
+            "traceId": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "keyword_generation",
+            "type": "generation",
+            "startTime": 1704278401000,
+            "endTime": 1704278402000,
+            "input": {
+                "count": 1,
+                "sample": [
+                    {
+                        "title": "Sony WH-1000XM5 Noise Canceling Headphones"
+                    }
+                ]
+            },
+            "output": {
+                "count": 5,
+                "sample": [
+                    "wireless",
+                    "headphones",
+                    "noise-canceling",
+                    "bluetooth",
+                    "sony"
+                ]
+            },
+            "decisions": {
+                "kept": {
+                    "count": 5,
+                    "reasons": [
+                        {
+                            "reason": "relevant_keyword",
+                            "count": 5,
+                            "examples": [
+                                "wireless",
+                                "headphones"
+                            ]
+                        }
+                    ]
+                },
+                "dropped": {
+                    "count": 0,
+                    "reasons": []
+                }
+            },
+            "reasoning": {
+                "effort": "medium",
+                "summary": "Extracted key product features from title. Focused on category (headphones), technology (wireless, bluetooth), and brand (sony)."
+            }
+        },
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440002",
+            "traceId": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "search_candidates",
+            "type": "retrieval",
+            "startTime": 1704278403000,
+            "endTime": 1704278405000,
+            "input": {
+                "count": 5,
+                "sample": [
+                    "wireless",
+                    "headphones"
+                ]
+            },
+            "output": {
+                "count": 100,
+                "sample": [
+                    {
+                        "name": "Bose QuietComfort",
+                        "price": 299
+                    },
+                    {
+                        "name": "Sony WH-1000XM4",
+                        "price": 279
+                    }
+                ]
+            },
+            "decisions": {
+                "kept": {
+                    "count": 100,
+                    "reasons": [
+                        {
+                            "reason": "matched_keywords",
+                            "count": 100,
+                            "examples": [
+                                {
+                                    "name": "Bose QuietComfort"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "dropped": {
+                    "count": 0,
+                    "reasons": []
+                }
+            }
+        },
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440003",
+            "traceId": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "filter_candidates",
+            "type": "filter",
+            "startTime": 1704278406000,
+            "endTime": 1704278408000,
+            "input": {
+                "count": 100
+            },
+            "output": {
+                "count": 15
+            },
+            "decisions": {
+                "kept": {
+                    "count": 15,
+                    "reasons": [
+                        {
+                            "reason": "price_in_range",
+                            "count": 15,
+                            "examples": [
+                                {
+                                    "name": "Bose QuietComfort",
+                                    "price": 299
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "dropped": {
+                    "count": 85,
+                    "reasons": [
+                        {
+                            "reason": "price_too_high",
+                            "count": 50,
+                            "examples": [
+                                {
+                                    "name": "Bang & Olufsen H95",
+                                    "price": 799
+                                }
+                            ],
+                            "metadata": {
+                                "threshold": 500
+                            }
+                        },
+                        {
+                            "reason": "price_too_low",
+                            "count": 20,
+                            "examples": [
+                                {
+                                    "name": "Generic Headphones",
+                                    "price": 29
+                                }
+                            ],
+                            "metadata": {
+                                "threshold": 100
+                            }
+                        },
+                        {
+                            "reason": "out_of_stock",
+                            "count": 15,
+                            "examples": [
+                                {
+                                    "name": "Sony WH-1000XM3",
+                                    "price": 249
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": "550e8400-e29b-41d4-a716-446655440004",
+            "traceId": "550e8400-e29b-41d4-a716-446655440000",
+            "name": "rank_and_select",
+            "type": "selection",
+            "startTime": 1704278409000,
+            "endTime": 1704278410000,
+            "input": {
+                "count": 15
+            },
+            "output": {
+                "count": 5,
+                "sample": [
+                    {
+                        "name": "Bose QuietComfort",
+                        "price": 299,
+                        "score": 0.95
+                    },
+                    {
+                        "name": "Sony WH-1000XM4",
+                        "price": 279,
+                        "score": 0.92
+                    }
+                ]
+            },
+            "decisions": {
+                "kept": {
+                    "count": 5,
+                    "reasons": [
+                        {
+                            "reason": "top_ranked",
+                            "count": 5,
+                            "examples": [
+                                {
+                                    "name": "Bose QuietComfort"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "dropped": {
+                    "count": 10,
+                    "reasons": [
+                        {
+                            "reason": "low_relevance_score",
+                            "count": 10,
+                            "examples": [
+                                {
+                                    "name": "JBL Tune 750",
+                                    "score": 0.65
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

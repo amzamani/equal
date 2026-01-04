@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.env.local
+*.log
+.DS_Store
+.xray-traces
+.xray-traces-failed
+.turbo/

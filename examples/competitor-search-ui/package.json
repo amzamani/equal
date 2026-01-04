@@ -1,0 +1,20 @@
+{
+    "name": "@xray/example-competitor-search-ui",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Competitor search example with UI and real LLM integration",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@xray/sdk": "workspace:*",
+        "openai": "^4.77.3"
+    },
+    "devDependencies": {
+        "@types/node": "^20.19.27",
+        "typescript": "^5.3.3",
+        "vite": "^5.0.11"
+    }
+}

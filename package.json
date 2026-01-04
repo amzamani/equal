@@ -1,0 +1,21 @@
+{
+  "name": "xray-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "X-Ray debugging system for multi-step, non-deterministic algorithmic systems",
+  "scripts": {
+    "dev:api": "pnpm --filter @xray/api dev",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6",
+    "turbo": "^1.11.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

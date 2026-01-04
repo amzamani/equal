@@ -1,0 +1,22 @@
+{
+    "name": "@xray/sdk",
+    "version": "1.0.0",
+    "description": "X-Ray SDK for instrumenting multi-step pipelines",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "prepublishOnly": "pnpm build"
+    },
+    "keywords": [
+        "observability",
+        "debugging",
+        "tracing",
+        "llm",
+        "pipeline"
+    ],
+    "devDependencies": {
+        "typescript": "^5.3.3"
+    }
+}
